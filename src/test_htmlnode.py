@@ -1,7 +1,9 @@
 import unittest
 from htmlnode import *
+from textnode import *
 
 class TestHTMLnode(unittest.TestCase):
+
     def test_repr(self):
         node = HTMLnode("p", "This is a sentence", [HTMLnode()], {"href":"https://www.google.com"})
         self.assertEqual("HTMLNode(p, This is a sentence, children: [HTMLNode(None, None, children: None, None)], {'href': 'https://www.google.com'})", repr(node))
@@ -71,6 +73,7 @@ class TestHTMLnode(unittest.TestCase):
                 LeafNode(None, "Normal text"),
             ],{"href" : "www.google.com", "target":"_blank"}
         )
+        print("this is test 2")
         self.assertEqual(node.to_html(),'<p href="www.google.com" target="_blank"><b>Bold text</b>Normal text<i leaf="leaf.com">italic text</i>Normal text</p>')
     
     def test_ParentNode3(self): #Error
@@ -90,6 +93,12 @@ class TestHTMLnode(unittest.TestCase):
         )
         with self.assertRaises(ValueError):
             node.to_html()
+    # Text_toHTMLNODE
+    def Text_toHTMLNodeI(self):
+        text_node = TextNode("italic","Italic Sentence")
+        HTML_node = LeafNode("i", "Italic Sentence")
+        print("this is a test")
+        self.assertEqual(text_node_to_html_node(text_node),HTML_node)
 
 if __name__ == "__main__":
-    unitest.main()
+    unittest.main()
