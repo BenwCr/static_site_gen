@@ -73,7 +73,7 @@ class TestHTMLnode(unittest.TestCase):
                 LeafNode(None, "Normal text"),
             ],{"href" : "www.google.com", "target":"_blank"}
         )
-        print("this is test 2")
+
         self.assertEqual(node.to_html(),'<p href="www.google.com" target="_blank"><b>Bold text</b>Normal text<i leaf="leaf.com">italic text</i>Normal text</p>')
     
     def test_ParentNode3(self): #Error
@@ -93,12 +93,53 @@ class TestHTMLnode(unittest.TestCase):
         )
         with self.assertRaises(ValueError):
             node.to_html()
-    # Text_toHTMLNODE
-    def Text_toHTMLNodeI(self):
-        text_node = TextNode("italic","Italic Sentence")
+
+class Test_TextNode_to_HTMLNode(unittest.TestCase):
+    def test_Text_toHTMLNodeI(self):
+
+        text_node = TextNode("Italic Sentence","italic")
         HTML_node = LeafNode("i", "Italic Sentence")
-        print("this is a test")
-        self.assertEqual(text_node_to_html_node(text_node),HTML_node)
+
+        self.assertEqual(repr(text_node_to_html_node(text_node)),repr(HTML_node))
+    def test_Text_toHTMLNodeB(self):
+
+        text_node = TextNode("bold Sentence","bold")
+        HTML_node = LeafNode("b", "bold Sentence")
+
+        self.assertEqual(repr(text_node_to_html_node(text_node)),repr(HTML_node))
+
+    def test_Text_toHTMLNodeC(self):
+
+        text_node = TextNode("code Sentence","code","www.google.com")
+        HTML_node = LeafNode("code", "code Sentence")
+
+        self.assertEqual(repr(text_node_to_html_node(text_node)),repr(HTML_node))
+
+    def test_Text_toHTMLNodeL(self):
+
+        text_node = TextNode("link Sentence","link","www.google.com")
+        HTML_node = LeafNode("a", "link Sentence",{"href":"www.google.com"})
+
+        self.assertEqual(repr(text_node_to_html_node(text_node)),repr(HTML_node))
+    def test_Text_toHTMLNodeImage(self):
+
+        text_node = TextNode("alt Image Sentence","image","www.google.com")
+        HTML_node = LeafNode("img", props={"src":"www.google.com","alt":"alt Image Sentence"})
+
+        self.assertEqual(repr(text_node_to_html_node(text_node)),repr(HTML_node))
+    def test_Text_toHTMLNodeImage2(self):
+
+        text_node = TextNode(None, text_type="image",url="www.google.com")
+        HTML_node = LeafNode("img", props={"src":"www.google.com"})
+
+        self.assertEqual(repr(text_node_to_html_node(text_node)),repr(HTML_node))
+    
+    def test_expection(self):
+        text_node = TextNode(None, text_type="Unk",url="www.google.com")
+        with self.assertRaises(Exception):
+            text_node_to_html_node(text_node)
+
+
 
 if __name__ == "__main__":
     unittest.main()
