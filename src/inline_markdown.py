@@ -3,10 +3,19 @@ import re
 
 
 
+
+def text_to_textnodes(text):
+    text_Node = TextNode(text,text_type_text)
+    split_nodes = split_nodes_delimiter(split_nodes_delimiter(split_nodes_delimiter(split_nodes_image(split_nodes_link([text_Node])),"`",text_type_code),"**",text_type_bold),"*", text_type_italic)
+    return split_nodes
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     output = []
     for node in old_nodes:
         texts = node.text.split(delimiter) #List of split texts based on delimiter
+        if node.text_type == text_type_image or node.text_type == text_type_link:
+            output.append(node)
+            continue
         for i in range(len(texts)):
             if texts[i]== "": #don't create a TextNode for an empty string
                 continue
@@ -62,3 +71,5 @@ def split_nodes_link(old_nodes): #linkNodes(text, link, www.***.com), textNodes(
             output += (split_nodes_link(node_list))#RECURSION
     return output
     
+
+
