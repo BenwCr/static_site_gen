@@ -72,5 +72,10 @@ This is the same paragraph on a new line
 2. item
 3. item"""
         self.assertEqual(block_to_block_type(block), block_type_olist)
+
+    def test_heading_block_type(self):
+        self.assertEqual(heading_block_type("# Hello"), "h1")
+
+
 if __name__ == "__main__":
     unittest.main()

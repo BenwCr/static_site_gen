@@ -5,7 +5,7 @@ class HTMLnode:
         self.tag = tag #str or None
         self.value = value #str or None
         self.children = children #list or None
-        self.props = props #dict or None
+        self.props = props #dict or None, links associated
 
     def to_html(self): #will be overriden by child classes
         raise NotImplementedError

@@ -39,3 +39,14 @@ def is_ordered_list(block):
             return False
             
     return True
+
+def heading_block_type(headingBlock):
+    headingType = 0
+    for i in headingBlock:
+        if i == "#":
+            headingType += 1
+        else:
+            break
+    if headingType in range(1,6):
+        return "h"+ str(headingType)
+    raise Exception(ValueError)
