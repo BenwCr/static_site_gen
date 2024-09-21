@@ -1,8 +1,8 @@
 from textnode import *
+from copy_dir import *
 
 def main():
-    textNodetest = TextNode("I am Text", "Italic", "www.yourmom.com")
-    print (textNodetest)
+    Copy_srcTopublic()
 
 
 main()
