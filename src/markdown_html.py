@@ -28,10 +28,18 @@ from inline_markdown import (
     split_nodes_link
 )
 
-
-#block -> [Textnode (type)], 
-
-
+def extract_title(markdown):
+    blocks = markdown_to_blocks(markdown)
+    for block in blocks:
+        if block_to_block_type(block) == block_type_heading:
+            index = 1
+            for i in block:
+                if i == " ":
+                    return block[index:]
+                index += 1
+    raise LookupError("Title Not Found")
+                    
+                
 
 
 
@@ -44,20 +52,19 @@ def markdown_to_html_node(markdown):
     return ParentNode("div", children, None)
 
 
+
 def block_to_html_node(block):
     block_type = block_to_block_type(block)
-    if block_type == block_type_paragraph:
-        return paragraph_to_html_node(block)
-    if block_type == block_type_heading:
-        return heading_to_html_node(block)
-    if block_type == block_type_code:
-        return code_to_html_node(block)
-    if block_type == block_type_olist:
-        return olist_to_html_node(block)
-    if block_type == block_type_ulist:
-        return ulist_to_html_node(block)
-    if block_type == block_type_quote:
-        return quote_to_html_node(block)
+    blocktype_func = {
+        block_type_paragraph: paragraph_to_html_node,
+        block_type_heading: heading_to_html_node,
+        block_type_code: code_to_html_node,
+        block_type_olist: olist_to_html_node,
+        block_type_ulist: ulist_to_html_node,
+        block_type_quote: quote_to_html_node
+    }
+    if block_type in blocktype_func:
+        return blocktype_func[block_type](block)
     raise ValueError("Invalid block type")
 
 

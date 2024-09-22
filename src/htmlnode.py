@@ -27,14 +27,10 @@ class LeafNode(HTMLnode):
         super().__init__(tag, value, [], props)
 
     def to_html(self):
-        if self.value == None:
+        if self.value == "" and self.props == None:
             raise ValueError
-        else:
-            value = self.value
-            print (value.strip('\n'))
-            self.value = value.strip('\n')
-            if "\n" in self.value:
-                print (self.value)
+        elif self.value == None:
+            self.value = ""
         if self.tag == None:
             return self.value
         return "<" + self.tag + self.props_to_html() + ">" + self.value + "</" +self.tag + ">"
